@@ -7,7 +7,6 @@ class QuestionsScreen extends StatefulWidget {
 
   @override
   _QuestionsScreenState createState() => _QuestionsScreenState();
-
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
@@ -17,23 +16,27 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
 
     return SizedBox(
       width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            currentQuestion.text,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+      child: Container(
+        margin: const EdgeInsets.all(40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              currentQuestion.text,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(height: 20),
-          AnswerButton(answerText: currentQuestion.answers[0], onTap: () {}),
-          AnswerButton(answerText: currentQuestion.answers[1], onTap: () {}),
-          AnswerButton(answerText: currentQuestion.answers[2], onTap: () {}),
-          AnswerButton(answerText: currentQuestion.answers[3], onTap: () {}),
-        ],
+            SizedBox(height: 20),
+            ...currentQuestion.getShuffledAnswers().map((item) {
+              return AnswerButton(answerText: item, onTap: () {});
+            }),
+          ],
+        ),
       ),
     );
   }
