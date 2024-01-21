@@ -2,6 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/question_screen.dart';
 import 'package:quiz_app/start_screen.dart';
 
+/*
+Every Flutter Widget has a built-in lifecycle:
+A collection of methods that are automatically executed by Flutter (at certain points of time).
+
+There are three extremely important (stateful) widget lifecycle methods you should be aware of:
+
+initState(): Executed by Flutter when the StatefulWidget's State object is initialized
+
+build(): Executed by Flutter when the Widget is built for the first time AND after setState() was called
+
+dispose(): Executed by Flutter right before the Widget will be deleted (e.g., because it was displayed conditionally)
+
+* */
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
 
@@ -12,13 +25,17 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
 
-  Widget? activeScreen;
+  //Solution 2 for rendering screens
+  var activeString = 'start-screen';
 
-  @override
-  void initState() {
-    activeScreen = StartScreen(switchScreen);
-    super.initState();
-  }
+
+  //Solution 1 for rendering screens
+  //Widget? activeScreen;
+  // @override
+  // void initState() {
+  //   activeScreen = StartScreen(switchScreen);
+  //   super.initState();
+  // }
 
   void switchScreen(){
     /*setState()
@@ -26,12 +43,22 @@ class _QuizState extends State<Quiz> {
     * it tells Flutter to re-render the widget tree
     * */
     setState(() {
-      activeScreen = const QuestionsScreen();
+      //Solution 1 for rendering screens
+      //activeScreen = const QuestionsScreen();
+
+      //Solution 2 for rendering screens
+      activeString = 'question-screen';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    //Solution 3 for rendering screens
+    Widget screenWidget = StartScreen(switchScreen);
+    if(activeString == 'question-screen'){
+      screenWidget = const QuestionsScreen();
+    }
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -43,7 +70,12 @@ class _QuizState extends State<Quiz> {
               ),
 
             ),
-            child: activeScreen
+            //Solution 1 for rendering screens
+            //child: activeScreen,
+            //Solution 2 for rendering screens (Ternary operator)
+            //child: activeString == 'start-screen' ? StartScreen(switchScreen) : const QuestionsScreen(),
+            //Solution 3 for rendering screens
+            child: screenWidget
         ),
       ),
     );  }
