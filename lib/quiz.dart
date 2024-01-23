@@ -28,6 +28,8 @@ class _QuizState extends State<Quiz> {
   //Solution 2 for rendering screens
   var activeString = 'start-screen';
 
+  final List<String> selectedAnswer = [];
+
 
   //Solution 1 for rendering screens
   //Widget? activeScreen;
@@ -51,14 +53,22 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void chooseAnswer(String answer){
+    setState(() {
+      selectedAnswer.add(answer);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
     //Solution 3 for rendering screens
     Widget screenWidget = StartScreen(switchScreen);
+
     if(activeString == 'question-screen'){
-      screenWidget = const QuestionsScreen();
+      screenWidget = QuestionsScreen(onSelectAnswer: chooseAnswer,);
     }
+
     return MaterialApp(
       home: Scaffold(
         body: Container(
