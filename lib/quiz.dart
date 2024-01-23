@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/question_screen.dart';
+import 'package:quiz_app/results_screen.dart';
 import 'package:quiz_app/start_screen.dart';
 
 /*
@@ -57,6 +59,13 @@ class _QuizState extends State<Quiz> {
     setState(() {
       selectedAnswer.add(answer);
     });
+
+    if(selectedAnswer.length == questions.length){
+      setState(() {
+        activeString = 'results-screen';
+        selectedAnswer.clear();
+      });
+    }
   }
 
   @override
@@ -67,6 +76,10 @@ class _QuizState extends State<Quiz> {
 
     if(activeString == 'question-screen'){
       screenWidget = QuestionsScreen(onSelectAnswer: chooseAnswer,);
+    }
+
+    if(activeString == 'results-screen'){
+      screenWidget = const ResultsScreen();
     }
 
     return MaterialApp(
