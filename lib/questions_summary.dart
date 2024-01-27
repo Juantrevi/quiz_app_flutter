@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
 class QuestionSummary extends StatelessWidget {
   const QuestionSummary(this.summaryData, {super.key});
